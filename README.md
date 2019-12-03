@@ -1,6 +1,12 @@
 # Tournament-Tracker
 Pickleball
 
+User Story: 
+
+https://docs.google.com/document/d/1FkaXoabmYtjEbIKRwsGURrNBxFx1ljiaGQOTKxgpwrg/edit?usp=sharing
+
+![wireframe](/images/TT-Wireframe.jpg)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
