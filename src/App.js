@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { Image } from 'semantic-ui-react'
-// import Register from './Register';
-// import Login from './Login';
+import Register from './Register';
+import Login from './Login';
 // import TourneyContainer from './TourneyContainer';
 // import HeaderComponent from './HeaderComponent';
 // import CreateIssue from './CreateIssueForm'; //I do not think we can do this.
@@ -22,7 +22,15 @@ function App() {
   return (
   
   		<div>
-  			<h1>Lose</h1><h1>Again</h1>
+  			<Switch>
+          		<Route exact path="/" component= { Login }/>
+	    		<Route exact path="/register" component={ Register }/>
+	    		{/*<Route exact path="/" component={ Login } />*/}
+          		<Route exact path="/login" component= { Login } />
+	    		{/*<Route exact path="/tourneys" component={ TourneyContainer } />*/}
+	    		{/*<Route exact path="/create_issue" ={ CreateIssue } />I do not think we can do this*/}
+	    		<Route component={ My404 } />
+	 		</Switch> 
 
 		</div>
 	
