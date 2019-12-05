@@ -31,29 +31,30 @@ class Register extends Component {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log('hello', this.state);
-		const registrationUrl = `${process.env.REACT_APP_API_URL}/api/v1/users/register`; // localhost:8000/api/v1/users/register
-    	// this is users.  this matches flask app.py: app.register_blueprint(user, url_prefix='/api/v1/users')
-    	const registerResponse = await fetch(registrationUrl, {
-    		method: 'POST',
-    		body: JSON.stringify(this.state),
-    		credentials: 'include', // this sends our session cookie with our request
-    		headers: {
-    			'Content-Type': 'application/json'
-    		}
+		// const registrationUrl = `${process.env.REACT_APP_API_URL}/api/v1/users/register`; // localhost:8000/api/v1/users/register
+  //   	// this is users.  this matches flask app.py: app.register_blueprint(user, url_prefix='/api/v1/users')
+  //   	const registerResponse = await fetch(registrationUrl, {
+  //   		method: 'POST',
+  //   		body: JSON.stringify(this.state),
+  //   		credentials: 'include', // this sends our session cookie with our request
+  //   		headers: {
+  //   			'Content-Type': 'application/json'
+  //   		}
     		
-    	});
+  //   	});
 
-    	const parsedResponse = await registerResponse.json();
+  //   	const parsedResponse = await registerResponse.json();
   
-	    if (parsedResponse.status.code === 201) {
-	      console.log('Sign up successful');
-	      this.props.history.push('/tourneys'); // Change url to /issues programmatically with react-router
-	    } else {
-	      // Else display error message to the user
-	      this.setState({
-	        errorMsg: parsedResponse.status.message
-	      });
-	    }
+	 //    if (parsedResponse.status.code === 201) {
+	 //      console.log('Sign up successful');
+	 //      this.props.history.push('/tourneys'); // Change url to /issues programmatically with react-router
+	 //    } else {
+	 //      // Else display error message to the user
+	 //      this.setState({
+	 //        errorMsg: parsedResponse.status.message
+	 //      });
+	 //    }
+      this.props.history.push('/tourneys');
 	}
 
 	render() {
