@@ -110,12 +110,12 @@ class TourneyContainer extends Component {
 		
 		
 
-			// this.setState({
-			// 	showEditModal: true,
-			// 	tourneyToEdit: {
-			// 		...tourneyFromTheList
-			// 	}
-			// })
+			this.setState({
+				showEditModal: true,
+				tourneyToEdit: {
+					...tourneyFromTheList
+				}
+			})
 	}
       	// } else { 
       	// 	alert("You cannot edit an issue that you did not create")

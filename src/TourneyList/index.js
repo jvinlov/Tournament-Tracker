@@ -9,7 +9,7 @@ function TourneyList(props){
 		console.log(tourney)
 		return (
 
-			<Card fluid key={tourney.id}>
+			<Card fluid key={tourney.id} href={() => props.openEditModal(tourney)}>
 				<Card.Content>
 					<Card.Header>Name: {tourney.name}</Card.Header>
 					<Card.Meta>
