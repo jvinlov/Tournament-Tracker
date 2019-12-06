@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Label, Button, Message, Grid, Header, Image, Icon, List, Segment} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import pbIcon from '../pickIcon.png'
-
+import MenuBar from '../Menu'
 class Login extends Component {
 	constructor() {
 		super();
@@ -49,6 +49,7 @@ class Login extends Component {
 		return (
 			<Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
 			    <Grid.Column style={{ maxWidth: 450 }}>
+			    <MenuBar/>
 			      <Header as='h2' color='teal' textAlign='center'>
 			        <Image src={pbIcon}/> Tournament Tracker
 			      </Header>

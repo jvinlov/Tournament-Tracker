@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import TourneyList from '../TourneyList';
 import CreateTourney from '../CreateTourney';// not sure if we can separate this onto another page???
 // import EditIssueModal from '../EditTourneyModal';
-import { Grid, Segment } from 'semantic-ui-react';
+import { Grid, Segment, Image } from 'semantic-ui-react';
+import pbIcon from '../pickIcon.png'
+import MenuBar from '../Menu'
+
+
 
 class TourneyContainer extends Component {
 	constructor(props){
@@ -26,22 +30,22 @@ class TourneyContainer extends Component {
 	}
 	getTourneys = async () => {
 
-		// try {
-		// 	const tourneys = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/',
-		// 		{ // added this callback to send over the session cookie
-		// 			credentials: 'include',
-		// 			method: "GET"
-		// 		});
-		// 	const parsedTourneys = await issues.json();
-		// 	console.log(parsedTourneys);
+		try {
+			const tourneys = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/',
+				{ // added this callback to send over the session cookie
+					credentials: 'include',
+					method: "GET"
+				});
+			const parsedTourneys = await tourneys.json();
+			console.log(parsedTourneys);
 
-		// 	this.setState({
-		// 		tourneys: parsedTourneys.data
-		// 	})
+			this.setState({
+				tourneys: parsedTourneys.data
+			})
 		
-	// } catch(err){
-	// 	console.log(err);
-	// 	}
+	} catch(err){
+		console.log(err);
+		}
 	}
 // Add Tourney method
 	addTourney = async (e, tourney) => {
@@ -119,19 +123,19 @@ class TourneyContainer extends Component {
 
       
 
-	handleEditChange = (e) => {
-    	this.setState({
-      		tourneyToEdit: {
-        		...this.state.tourneyToEdit,
-        [e.currentTarget.name]: e.currentTarget.value
-      		}
-    	})
-  	}
+	// handleEditChange = (e) => {
+ //    	this.setState({
+ //      		tourneyToEdit: {
+ //        		...this.state.tourneyToEdit,
+ //        [e.currentTarget.name]: e.currentTarget.value
+ //      		}
+ //    	})
+ //  	}
 
   	
 
-  	closeAndEdit = async (e) => {
-    	e.preventDefault();
+  	// closeAndEdit = async (e) => {
+   //  	e.preventDefault();
 
     	// try {
 
@@ -163,29 +167,32 @@ class TourneyContainer extends Component {
     //   console.log(err);
     // }
 
-  }
+  // }
 
-	render(){
-		return(
-
+  render () {
+  	return(
+  	
+  
 			<Grid divided='vertically' centered stackable>
 			    <Grid.Row columns={3}>
+			      <Grid.Column width={3}></Grid.Column>
+			      <Grid.Column width={10}>
+					<MenuBar/>
+			        <TourneyList tourneys={this.state.tourneys}/>
+
+			      </Grid.Column>
+			      <Grid.Column width={3}></Grid.Column>
+			    </Grid.Row>
+
+
+			    {/*<Grid.Row columns={3}>
 			      <Grid.Column width={3}></Grid.Column>
 			      <Grid.Column width={10}>
 			        <CreateTourney addTourney={this.addTourney} />
 			      </Grid.Column>
 			      <Grid.Column width={3}></Grid.Column>
-			    </Grid.Row>
-
-
-			    <Grid.Row columns={3}>
-			      <Grid.Column width={3}></Grid.Column>
-			      <Grid.Column width={10}>
-			        <TourneyList tourneys={this.state.tourneys} deleteTourney={this.deleteTourney} openEditModal={this.openEditModal}/>
-			      </Grid.Column>
-			      <Grid.Column width={3}></Grid.Column>
 			      {/*<EditTourneyModal handleEditChange={this.handleEditChange} open={this.state.showEditModal} tourneyToEdit={this.state.tourneyToEdit} closeAndEdit={this.closeAndEdit}/>*/}
-			    </Grid.Row>
+			    {/*</Grid.Row>*/}
 			</Grid>
 			)
 	}

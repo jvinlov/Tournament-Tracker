@@ -11,17 +11,24 @@ function TourneyList(props){
 
 			<Card fluid key={tourney.id}>
 				<Card.Content>
-					<Card.Header>{tourney.name}, {tourney.location}, / {tourney.date}, {tourney.usapa} </Card.Header>
+					<Card.Header>Name: {tourney.name}</Card.Header>
+					<Card.Meta>
+						<span>Location: {tourney.location}</span>
+					</Card.Meta>
+					<Card.Meta>
+						<span>Date: {tourney.date}</span>
+					</Card.Meta>
+
 					{/*<Card.Description>{event.id}</Card.Description>*/}
 					
 					
 				</Card.Content>
-				<Card.Content extra>
+				{/*<Card.Content extra>
             		<Button onClick={() => props.deleteTourney(tourney.id)}>Delete Issue</Button>
             		<Button onClick={() => props.openEditModal(tourney)}>Edit Issue</Button>
 
           		
-          		</Card.Content>
+          		</Card.Content>*/}
           	</Card>
           )
 		}

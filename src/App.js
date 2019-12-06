@@ -4,10 +4,11 @@ import { Image } from 'semantic-ui-react'
 import Register from './Register';
 import Login from './Login';
 import TourneyContainer from './TourneyContainer';
-// import HeaderComponent from './HeaderComponent';
-// import CreateIssue from './CreateIssueForm'; //I do not think we can do this.
+import TourneyList from './TourneyList';
+import CreateTourney from './CreateTourney';
 import { Route, Switch } from 'react-router-dom';
 import Pickleball from'./PickleballOnLine.png';
+import MenuBar from './Menu'
 
 
 const My404 = () => {
@@ -25,12 +26,12 @@ function App() {
   			<Switch>
           		<Route exact path="/" component= { Login }/>
 	    		<Route exact path="/register" component={ Register }/>
-	    		{/*<Route exact path="/" component={ Login } />*/}
+	    		
           		<Route exact path="/login" component= { Login } />
 	    		<Route exact path="/tourneys" component={ TourneyContainer } />
-	    		{/*<Route exact path="/create_issue" ={ CreateIssue } />I do not think we can do this*/}
+	    		<Route exact path="/CreateTourney" component={ CreateTourney } />
 	    		<Route component={ My404 } />
-	 		</Switch> 
+	 		</Switch>
 
 		</div>
 	
