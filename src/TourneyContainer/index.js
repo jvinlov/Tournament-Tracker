@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TourneyList from '../TourneyList';
 import CreateTourney from '../CreateTourney';// not sure if we can separate this onto another page???
-// import EditIssueModal from '../EditTourneyModal';
+import EditTourneyModal from '../EditTourneyModal';
 import { Grid, Segment, Image } from 'semantic-ui-react';
 import pbIcon from '../pickIcon.png'
 import MenuBar from '../Menu'
@@ -83,15 +83,15 @@ class TourneyContainer extends Component {
 	deleteTourney = async (id) => {
 
 		console.log(id)
-		// const deleteTourneyResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/' + id, {
-		// 											method: 'DELETE',
-		// 											credentials: 'include' // Send a session cookie along with our request
-		// 										});
-		// const deleteTourneyParsed = await deleteTourneyResponse.json();
+		const deleteTourneyResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/' + id, {
+													method: 'DELETE',
+													credentials: 'include' // Send a session cookie along with our request
+												});
+		const deleteTourneyParsed = await deleteTourneyResponse.json();
 		// console.log(deleteTourneyResponse)
 		// if (deleteTourneyParsed.status.code === 200) {
 		// 	// now that the db has deleted our item, we need to remove it from state
-		// 	this.setState({tourneys: this.state.tourneys.filter((issue) => tourneys.id !== id )})
+			this.setState({tourneys: this.state.tourneys.filter((tourneys) => tourneys.id !== id )})
 
 		// } else {
 		// 	alert ("You cannot delete an issue that you did not create")
@@ -178,7 +178,7 @@ class TourneyContainer extends Component {
 			      <Grid.Column width={3}></Grid.Column>
 			      <Grid.Column width={10}>
 					<MenuBar/>
-			        <TourneyList tourneys={this.state.tourneys}/>
+			        <TourneyList tourneys={this.state.tourneys} deleteTourney={this.deleteTourney} openEditModal={this.openEditModal}/>
 
 			      </Grid.Column>
 			      <Grid.Column width={3}></Grid.Column>

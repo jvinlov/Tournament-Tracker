@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Label, Segment, Grid, Header, Icon } from 'semantic-ui-react';
+import MenuBar from '../Menu'
 
 class CreateEvent extends Component {
 	constructor(){
@@ -31,6 +32,7 @@ class CreateEvent extends Component {
 	render (){
 		return (
 			<Form onSubmit={this.handleSubmit}>
+			<MenuBar/>
 				<Segment stacked>
 					<Form.Field>
 				  	<label>Category</label>

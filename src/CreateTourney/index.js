@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Label, Segment, Grid, Header, Icon, Checkbox, Image  }from 'semantic-ui-react';
-import pbIcon from '../pickIcon.png'
+import pbIcon from '../pickIcon.png';
+import MenuBar from '../Menu'
 class CreateTourney extends Component {
 	constructor(){
 		super();
@@ -49,8 +50,10 @@ class CreateTourney extends Component {
 
 	render (){
 		return (
+
 			<Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450 }}>
+				<MenuBar/>
 			<Header as='h2' color='yellow' textAlign='center'>
 			        <Image src={pbIcon} /> Create New Tournament
 			</Header>

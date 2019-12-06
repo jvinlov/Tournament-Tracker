@@ -5,13 +5,13 @@ const EditTourneyModal = (props) => {
 	console.log(props)
 		return (
 			<Modal open={props.open}>
-				<Header>Name: {tourney.name}</Header>
+				<Header>Name: {props.tourney.name}</Header>
 				<Modal.Content>
 					<Modal.Meta>
-						<span>Location: {tourney.location}</span>
+						<span>Location: {props.tourney.location}</span>
 					</Modal.Meta>
 					<Modal.Meta>
-						<span>Date: {tourney.date}</span>
+						<span>Date: {props.tourney.date}</span>
 					</Modal.Meta>
 					<Form onSubmit={props.closeAndEdit}>
 						<Label>Event</Label>
