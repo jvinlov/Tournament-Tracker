@@ -91,14 +91,14 @@ class TourneyContainer extends Component {
 		// console.log(deleteTourneyResponse)
 		// if (deleteTourneyParsed.status.code === 200) {
 		// 	// now that the db has deleted our item, we need to remove it from state
-			this.setState({tourneys: this.state.tourneys.filter((tourneys) => tourneys.id !== id )})
+			this.setState({tourneys: this.state.tourneys.filter((tourney) => tourney.id !== id )})
 
 		// } else {
 		// 	alert ("You cannot delete an issue that you did not create")
 		// }
 
 		// console.log(deleteTourneyParsed, ' response from Flask server')
-		// 	// then make the delete request, then remove the dog from the state array using filter
+		// 	// then make the delete request, then remove the tourney from the state array using filter
 
 	}
 
@@ -123,51 +123,51 @@ class TourneyContainer extends Component {
 
       
 
-	// handleEditChange = (e) => {
- //    	this.setState({
- //      		tourneyToEdit: {
- //        		...this.state.tourneyToEdit,
- //        [e.currentTarget.name]: e.currentTarget.value
- //      		}
- //    	})
- //  	}
+	handleEditChange = (e) => {
+    	this.setState({
+      		tourneyToEdit: {
+        		...this.state.tourneyToEdit,
+        [e.currentTarget.name]: e.currentTarget.value
+      		}
+    	})
+  	}
 
   	
 
-  	// closeAndEdit = async (e) => {
-   //  	e.preventDefault();
+  	closeAndEdit = async (e) => {
+    	e.preventDefault();
 
-    	// try {
+    	try {
 
-     //  		const editResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/' + this.state.tourneyToEdit.id, {
-     //    		method : "PUT",
-     //    		credentials: 'include', // Send a session cookie along with our request
-     //    		body: JSON.stringify(this.state.tourneyToEdit),
-     //    		headers: {
-     //      			'Content-Type' : 'application/json'
-     //    		}
-     //  		});
+      		const editResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/' + this.state.tourneyToEdit.id, {
+        		method : "PUT",
+        		credentials: 'include', // Send a session cookie along with our request
+        		body: JSON.stringify(this.state.tourneyToEdit),
+        		headers: {
+          			'Content-Type' : 'application/json'
+        		}
+      		});
 
-     //  const editResponseParsed = await editResponse.json();
-     //  console.log('editResponseParsed: ', editResponseParsed);
+      const editResponseParsed = await editResponse.json();
+      console.log('editResponseParsed: ', editResponseParsed);
 
-     //  const newTourneyArrayWithEdit = this.state.tourneys.map((tourney)=> {
-     //    if(tourney.id === editResponseParsed.data.id) {
-     //        tourney = editResponseParsed.data
-     //    }
-     //    return tourney;
-     //    })
+      const newTourneyArrayWithEdit = this.state.tourneys.map((tourney)=> {
+        if(tourney.id === editResponseParsed.data.id) {
+            tourney = editResponseParsed.data
+        }
+        return tourney;
+        })
       
-    //   this.setState({
-    //     tourneys: newTourneyArrayWithEdit,
-    //     showEditModal: false
-    //   })
+      this.setState({
+        tourneys: newTourneyArrayWithEdit,
+        showEditModal: false
+      })
 
-    // } catch(err) {
-    //   console.log(err);
-    // }
+    } catch(err) {
+      console.log(err);
+    }
 
-  // }
+  }
 
   render () {
   	return(
@@ -182,6 +182,7 @@ class TourneyContainer extends Component {
 
 			      </Grid.Column>
 			      <Grid.Column width={3}></Grid.Column>
+			    	<EditTourneyModal handleEditChange={this.handleEditChange} open={this.state.showEditModal} tourneyToEdit={this.state.tourneyToEdit} closeAndEdit={this.closeAndEdit}/>
 			    </Grid.Row>
 
 
