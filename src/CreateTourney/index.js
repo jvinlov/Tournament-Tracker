@@ -53,7 +53,7 @@ class CreateTourney extends Component {
 
 			<Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450 }}>
-				<MenuBar/>
+		
 			<Header as='h2' color='yellow' textAlign='center'>
 			        <Image src={pbIcon} /> Create New Tournament
 			</Header>

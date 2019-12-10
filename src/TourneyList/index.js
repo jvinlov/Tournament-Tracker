@@ -5,8 +5,10 @@ function TourneyList(props){
 
 	const tourneys = props.tourneys.map((tourney) => {
 		// THIS IS A CHECK FOR LOGIN
-		// if(localStorage.getItem('sessionId') === issue.user.toString()){
+		if(localStorage.getItem('sessionId') === tourney.user.toString()){
+
 		console.log(tourney)
+		tourney.type = "tourney"
 		return (
 
 			<Card fluid key={tourney.id}>
@@ -21,7 +23,7 @@ function TourneyList(props){
 				</Card.Content>	
 					<Card.Content extra>
             		<Button onClick={() => props.deleteTourney(tourney.id)}>Delete Tourney</Button>
-            		<Button onClick={() => props.openEditModal(tourney)}>Show Tourney</Button>
+            		<Button onClick={() => props.showEditModal(tourney)}>Show Tourney</Button>
 
 					
 					
@@ -31,6 +33,7 @@ function TourneyList(props){
           	</Card>
           )
 		}
+	}
 	)
 		return (
 		<Card.Group>

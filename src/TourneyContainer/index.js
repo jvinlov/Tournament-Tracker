@@ -3,8 +3,11 @@ import TourneyList from '../TourneyList';
 import CreateTourney from '../CreateTourney';// not sure if we can separate this onto another page???
 import EditTourneyModal from '../EditTourneyModal';
 import { Grid, Segment, Image } from 'semantic-ui-react';
-import pbIcon from '../pickIcon.png'
-import MenuBar from '../Menu'
+import pbIcon from '../pickIcon.png';
+import MenuBar from '../Menu';
+import CreateEvent from '../CreateEvent';
+import EventList from '../EventList';
+import EditEvent from '../EditEvent'
 
 
 
@@ -21,12 +24,21 @@ class TourneyContainer extends Component {
 				id: ''
 			},
 			events: [],
-			showEditModal: false
+			eventToEdit: {
+				category: '',
+				level: '',
+				partner: '',
+				results: '',
+				id: ''
+			},
+			showEditModal: false,
+			showEventModal: false
 		}
 	}
 
 	componentDidMount(){
 		this.getTourneys();
+		this.getEvents();
 	}
 	getTourneys = async () => {
 
@@ -47,6 +59,28 @@ class TourneyContainer extends Component {
 		console.log(err);
 		}
 	}
+
+	getEvents = async () => {
+
+		try {
+			const events = await fetch(process.env.REACT_APP_API_URL + '/api/v1/events/',
+				{ // added this callback to send over the session cookie
+					credentials: 'include',
+					method: "GET"
+				});
+			const parsedEvents = await events.json();
+			console.log(parsedEvents);
+
+			this.setState({
+				events: parsedEvents.data
+			})
+		
+	} catch(err){
+		console.log(err);
+		}
+	}
+
+
 // Add Tourney method
 	addTourney = async (e, tourney) => {
 		e.preventDefault();
@@ -80,6 +114,39 @@ class TourneyContainer extends Component {
 		}
 	}
 
+// Add Event method
+		addEvent = async (e, event) => {
+		e.preventDefault();
+		console.log(event, "This is the event");
+
+		try {
+
+		// 	// Send JSON
+		// 	// createdTourney variable storing response from Flask API
+			const createdEventResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/events/', {
+				method: 'POST',
+				credentials: 'include', // Send a session cookie along with our request
+				body: JSON.stringify(event),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			
+		// 	// turn the response from Flask into an object we can use
+			const parsedResponse = await createdEventResponse.json();
+			console.log(parsedResponse, ' this is response');
+
+		// 	// empty all issues in state to new array then
+		// 	// adding issue we created to the end of it (created shows up first until refresh then at the bottom)
+
+			this.setState({events: [parsedResponse.data, ...this.state.events]})
+		
+		} catch(err){
+			// console.log('error');
+			console.log(err);
+		}
+	}
+
 	deleteTourney = async (id) => {
 
 		console.log(id)
@@ -102,11 +169,38 @@ class TourneyContainer extends Component {
 
 	}
 
-	openEditModal = async (tourneyFromTheList) => {
-		console.log(tourneyFromTheList, ' tourneyToEdit ');
+	deleteEvent = async (id) => {
 
-		// if the user that is logged in created the issue then show modal
-		// else alert "You cannot edit an issue that you did not create"
+	console.log(id)
+	const deleteEventResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/events/' + id, {
+												method: 'DELETE',
+												credentials: 'include' // Send a session cookie along with our request
+											});
+	const deleteEventParsed = await deleteEventResponse.json();
+	console.log(deleteEventResponse)
+	// if (deleteTourneyParsed.status.code === 200) {
+	// 	// now that the db has deleted our item, we need to remove it from state
+		this.setState({events: this.state.events.filter((event) => event.id !== id )})
+
+	// } else {
+	// 	alert ("You cannot delete an issue that you did not create")
+	// }
+
+	// console.log(deleteTourneyParsed, ' response from Flask server')
+	// 	// then make the delete request, then remove the tourney from the state array using filter
+
+}
+
+	showEditModal = async (tourneyFromTheList) => {
+		console.log(tourneyFromTheList, ' tourneyToEdit ');
+			// if(tourneyFromTheList.type === "tourney"){
+
+			// } else (... === "event") {
+			// 	do ....
+			// }
+
+		// if the user that is logged in created the tourney then show modal
+		// else alert "You cannot edit a tourney that you did not create"
 		
 		
 
@@ -114,26 +208,89 @@ class TourneyContainer extends Component {
 				showEditModal: true,
 				tourneyToEdit: {
 					...tourneyFromTheList
-				}
+				},	
 			})
 	}
-      	// } else { 
-      	// 	alert("You cannot edit an issue that you did not create")
-      	// }	
 
+
+	showEventModal = async (eventFromTheList) => {
+	console.log(eventFromTheList, ' eventToEdit ');
+		// if(tourneyFromTheList.type === "tourney"){
+
+		// } else (... === "event") {
+		// 	do ....
+		// }
+
+	// if the user that is logged in created the event then show modal
+	// else alert "You cannot edit an event that you did not create"
+	
+	
+
+		this.setState({
+			showEventModal: true,
+			eventToEdit: {
+				...eventFromTheList
+			},	
+		})
+	}
+
+
+	handleEditEventChange = (e) => {
+    	this.setState({
+      		eventToEdit: {
+        		...this.state.eventToEdit,
+        			[e.currentTarget.name]: e.currentTarget.value
+      		},
+  	})
+    }	
+
+
+  	closeAndEditEvent = async (e) => {
+    	e.preventDefault();
+
+    	try {
+
+      		const editResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/events/' + this.state.eventToEdit.id, {
+        		method : "PUT",
+        		credentials: 'include', // Send a session cookie along with our request
+        		body: JSON.stringify(this.state.eventToEdit),
+        		headers: {
+          			'Content-Type' : 'application/json'
+        		}
+      		});
+
+      const editResponseParsed = await editResponse.json();
+      console.log('editResponseParsed: ', editResponseParsed);
+
+      const newEventArrayWithEdit = this.state.events.map((event)=> {
+        if(event.id === editResponseParsed.data.id) {
+            event = editResponseParsed.data
+        }
+        return event;
+        })
       
+      this.setState({
+        events: newEventArrayWithEdit,
+        showEventModal: false
+      })
+
+    } catch(err) {
+      console.log(err);
+    }
+
+  }
 
 	handleEditChange = (e) => {
     	this.setState({
       		tourneyToEdit: {
         		...this.state.tourneyToEdit,
-        [e.currentTarget.name]: e.currentTarget.value
-      		}
-    	})
-  	}
+        			[e.currentTarget.name]: e.currentTarget.value
+      		},
+
+  	})
+    }
 
   	
-
   	closeAndEdit = async (e) => {
     	e.preventDefault();
 
@@ -169,6 +326,8 @@ class TourneyContainer extends Component {
 
   }
 
+
+
   render () {
   	return(
   	
@@ -178,22 +337,29 @@ class TourneyContainer extends Component {
 			      <Grid.Column width={3}></Grid.Column>
 			      <Grid.Column width={10}>
 					<MenuBar/>
-			        <TourneyList tourneys={this.state.tourneys} deleteTourney={this.deleteTourney} openEditModal={this.openEditModal}/>
-
+			        <TourneyList tourneys={this.state.tourneys} deleteTourney={this.deleteTourney} showEditModal={this.showEditModal}/>
+			        <EventList events={this.state.events} deleteEvent={this.deleteEvent} showEventModal={this.showEventModal}/>
 			      </Grid.Column>
 			      <Grid.Column width={3}></Grid.Column>
 			    	<EditTourneyModal handleEditChange={this.handleEditChange} open={this.state.showEditModal} tourneyToEdit={this.state.tourneyToEdit} closeAndEdit={this.closeAndEdit}/>
+			    	<EditEvent handleEditEventChange={this.handleEditEventChange} open={this.state.showEventModal} eventToEdit={this.state.eventToEdit} closeAndEditEvent={this.closeAndEditEvent} />
 			    </Grid.Row>
 
 
-			    {/*<Grid.Row columns={3}>
-			      <Grid.Column width={3}></Grid.Column>
-			      <Grid.Column width={10}>
+			    <Grid.Row columns={2}>
+			      
+			      <Grid.Column width={7}>
 			        <CreateTourney addTourney={this.addTourney} />
 			      </Grid.Column>
-			      <Grid.Column width={3}></Grid.Column>
+			      <Grid.Column width={7}>
+			      	<CreateEvent addEvent={this.addEvent} />
+			      </Grid.Column>
 			      {/*<EditTourneyModal handleEditChange={this.handleEditChange} open={this.state.showEditModal} tourneyToEdit={this.state.tourneyToEdit} closeAndEdit={this.closeAndEdit}/>*/}
-			    {/*</Grid.Row>*/}
+			    </Grid.Row>
+
+			
+
+
 			</Grid>
 			)
 	}
