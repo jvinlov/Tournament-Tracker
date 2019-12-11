@@ -358,7 +358,7 @@ class TourneyContainer extends Component {
 			<MenuBar/>
 			<Grid divided='vertically' centered stackable>
 			    <Grid.Row columns={3}> 
-			    <Grid.Column width={16}>
+			    <Grid.Column width={10}>
 			      <Grid.Column width={3}></Grid.Column>
 			        <TourneyList tourneys={this.state.tourneys}
 			        			 deleteTourney={this.deleteTourney}
@@ -371,7 +371,7 @@ class TourneyContainer extends Component {
 			        <ShowOneTourney tourneyEvents={this.state.showOneTourneyEvents} open={this.state.showOneTourneyModalOpen} tourney={this.state.showOneTourneyObject} addEvent={this.addEvent} deleteEvent={this.deleteEvent} showEventModal={this.showEventModal}/>
 			        {/*<EventList events={this.state.events} deleteEvent={this.deleteEvent} showEventModal={this.showEventModal}/>*/}
 			      </Grid.Column>
-			      <Grid.Column width={3}></Grid.Column>
+			      <Grid.Column width={10}></Grid.Column>
 			    	<EditTourneyModal handleEditChange={this.handleEditChange} open={this.state.showEditModal} tourneyToEdit={this.state.tourneyToEdit} closeAndEdit={this.closeAndEdit}/>
 			    	<EditEvent handleEditEventChange={this.handleEditEventChange} open={this.state.showEventModal} eventToEdit={this.state.eventToEdit} closeAndEditEvent={this.closeAndEditEvent} />
 			    </Grid.Row>
