@@ -7,7 +7,7 @@ const EditTourneyModal = (props) => {
 	console.log(props)
 		return (
 			<Modal open={props.open}>
-				<Grid divied='vertical' centered stackable>
+				<Grid centered stackable>
 					<Grid.Row columns={2}>
 						<Grid.Column width={6}>
 							<Header>Edit Tourney</Header>

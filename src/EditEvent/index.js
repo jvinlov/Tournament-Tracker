@@ -6,7 +6,7 @@ const EditEvent = (props) => {
 		return (
 
 			<Modal open={props.open}>
-				<Grid divied='vertical' centered stackable>
+				<Grid divided='vertical' centered stackable>
 						<Grid.Column width={10}>
 							<Header>Edit Event</Header>
 							<Modal.Content>

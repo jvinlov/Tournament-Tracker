@@ -20,12 +20,6 @@ class MenuBar extends Component {
         </Menu.Item>
 
         <Menu.Item>
-          <Link to='/CreateTourney'>Create Tournament</Link>
-        </Menu.Item>
-        
-     
-
-        <Menu.Item>
           <Link to='/tourneys'>Tournament List</Link>
         </Menu.Item>
 

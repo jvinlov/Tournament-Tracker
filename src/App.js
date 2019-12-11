@@ -30,7 +30,7 @@ function App() {
 	    		<Route exact path="/events" component= { CreateEvent }/>
           		<Route exact path="/login" component= { Login } />
 	    		<Route exact path="/tourneys" component={ TourneyContainer } />
-	    		{/*<Route exact path="/CreateTourney" component={ CreateTourney } />*/}
+	    		<Route exact path="/CreateTourney" component={ CreateTourney } />
 	    		<Route component={ My404 } />
 	 		</Switch>
 

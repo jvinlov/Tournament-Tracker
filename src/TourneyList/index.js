@@ -5,9 +5,8 @@ function TourneyList(props){
 
 	const tourneys = props.tourneys.map((tourney) => {
 		// THIS IS A CHECK FOR LOGIN
-		if(localStorage.getItem('sessionId') === tourney.user.toString()){
-
-		console.log(tourney)
+		// if(localStorage.getItem('sessionId') === event.user.toString()){
+		// console.log(tourney)
 		tourney.type = "tourney"
 		return (
 
@@ -22,8 +21,9 @@ function TourneyList(props){
 					</Card.Meta>
 				</Card.Content>	
 					<Card.Content extra>
+					<Button onClick={() => props.showOneTourney(tourney)}>Show Tourney and Add Event</Button>
             		<Button onClick={() => props.deleteTourney(tourney.id)}>Delete Tourney</Button>
-            		<Button onClick={() => props.showEditModal(tourney)}>Show Tourney</Button>
+            		<Button onClick={() => props.showEditModal(tourney)}>Edit Tourney</Button>
 
 					
 					
@@ -33,7 +33,6 @@ function TourneyList(props){
           	</Card>
           )
 		}
-	}
 	)
 		return (
 		<Card.Group>

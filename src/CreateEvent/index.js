@@ -11,7 +11,8 @@ class CreateEvent extends Component {
 			category: '',
 			level: '',
 			partner: '',
-			results: ''
+			results: '',
+			tourney: ''
 		}
 	}
 
@@ -25,9 +26,16 @@ class CreateEvent extends Component {
 			category:'',
 			level: '',
 			partner: '',
-			results: ''
-
+			results: '',
+			
 		})
+	}
+
+	componentDidMount() {
+		this.setState({
+			tourney: this.props.tourneyId
+		})
+		
 	}
 
 	render (){

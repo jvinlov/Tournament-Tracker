@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import TourneyList from '../TourneyList';
 import CreateTourney from '../CreateTourney';// not sure if we can separate this onto another page???
 import EditTourneyModal from '../EditTourneyModal';
-import { Grid, Segment, Image } from 'semantic-ui-react';
+import { Grid, Segment, Image, Container } from 'semantic-ui-react';
 import pbIcon from '../pickIcon.png';
 import MenuBar from '../Menu';
 import CreateEvent from '../CreateEvent';
 import EventList from '../EventList';
-import EditEvent from '../EditEvent'
+import EditEvent from '../EditEvent';
+import ShowOneTourney from '../ShowOneTourney'
 
 
 
@@ -32,13 +33,17 @@ class TourneyContainer extends Component {
 				id: ''
 			},
 			showEditModal: false,
-			showEventModal: false
+			showEventModal: false,
+			showOneTourneyModalOpen: false,
+			showOneTourneyObject: {},
+			showOneTourneyEvents: []
+
 		}
 	}
 
 	componentDidMount(){
 		this.getTourneys();
-		this.getEvents();
+		
 	}
 	getTourneys = async () => {
 
@@ -60,10 +65,10 @@ class TourneyContainer extends Component {
 		}
 	}
 
-	getEvents = async () => {
+	getEvents = async (tourneyId) => {
 
 		try {
-			const events = await fetch(process.env.REACT_APP_API_URL + '/api/v1/events/',
+			const events = await fetch(process.env.REACT_APP_API_URL + '/api/v1/events/' + tourneyId,
 				{ // added this callback to send over the session cookie
 					credentials: 'include',
 					method: "GET"
@@ -72,7 +77,7 @@ class TourneyContainer extends Component {
 			console.log(parsedEvents);
 
 			this.setState({
-				events: parsedEvents.data
+				showOneTourneyEvents: parsedEvents.data
 			})
 		
 	} catch(err){
@@ -84,7 +89,7 @@ class TourneyContainer extends Component {
 // Add Tourney method
 	addTourney = async (e, tourney) => {
 		e.preventDefault();
-		console.log(tourney);
+		// console.log(tourney);
 
 		try {
 
@@ -92,7 +97,7 @@ class TourneyContainer extends Component {
 		// 	// createdTourney variable storing response from Flask API
 			const createdTourneyResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/', {
 				method: 'POST',
-				// credentials: 'include', // Send a session cookie along with our request
+				credentials: 'include', // Send a session cookie along with our request
 				body: JSON.stringify(tourney),
 				headers: {
 					'Content-Type': 'application/json'
@@ -101,7 +106,7 @@ class TourneyContainer extends Component {
 			
 		// 	// turn the response from Flask into an object we can use
 			const parsedResponse = await createdTourneyResponse.json();
-			console.log(parsedResponse, ' this is response');
+			// console.log(parsedResponse, ' this is response');
 
 		// 	// empty all issues in state to new array then
 		// 	// adding issue we created to the end of it (created shows up first until refresh then at the bottom)
@@ -117,7 +122,7 @@ class TourneyContainer extends Component {
 // Add Event method
 		addEvent = async (e, event) => {
 		e.preventDefault();
-		console.log(event, "This is the event");
+		// console.log(event, "This is the event");
 
 		try {
 
@@ -134,12 +139,15 @@ class TourneyContainer extends Component {
 			
 		// 	// turn the response from Flask into an object we can use
 			const parsedResponse = await createdEventResponse.json();
-			console.log(parsedResponse, ' this is response');
+			// console.log(parsedResponse, ' this is response');
 
 		// 	// empty all issues in state to new array then
 		// 	// adding issue we created to the end of it (created shows up first until refresh then at the bottom)
 
-			this.setState({events: [parsedResponse.data, ...this.state.events]})
+			this.setState({
+				events: [parsedResponse.data, ...this.state.events],
+				showOneTourneyModalOpen: false
+			})
 		
 		} catch(err){
 			// console.log('error');
@@ -147,9 +155,11 @@ class TourneyContainer extends Component {
 		}
 	}
 
+
+
 	deleteTourney = async (id) => {
 
-		console.log(id)
+		// console.log(id)
 		const deleteTourneyResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/tourneys/' + id, {
 													method: 'DELETE',
 													credentials: 'include' // Send a session cookie along with our request
@@ -171,13 +181,13 @@ class TourneyContainer extends Component {
 
 	deleteEvent = async (id) => {
 
-	console.log(id)
+	// console.log(id)
 	const deleteEventResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/events/' + id, {
 												method: 'DELETE',
 												credentials: 'include' // Send a session cookie along with our request
 											});
 	const deleteEventParsed = await deleteEventResponse.json();
-	console.log(deleteEventResponse)
+	// console.log(deleteEventResponse)
 	// if (deleteTourneyParsed.status.code === 200) {
 	// 	// now that the db has deleted our item, we need to remove it from state
 		this.setState({events: this.state.events.filter((event) => event.id !== id )})
@@ -191,8 +201,19 @@ class TourneyContainer extends Component {
 
 }
 
+	showOneTourney = async (tourney) => {
+		// console.log(tourney, ' tourney to show');
+		// fetch to show the events associated with tourney
+		await this.getEvents(tourney.id);
+		this.setState({
+			showOneTourneyModalOpen: true,
+			showOneTourneyObject: tourney
+	
+		})
+	}
+
 	showEditModal = async (tourneyFromTheList) => {
-		console.log(tourneyFromTheList, ' tourneyToEdit ');
+		// console.log(tourneyFromTheList, ' tourneyToEdit ');
 			// if(tourneyFromTheList.type === "tourney"){
 
 			// } else (... === "event") {
@@ -214,7 +235,7 @@ class TourneyContainer extends Component {
 
 
 	showEventModal = async (eventFromTheList) => {
-	console.log(eventFromTheList, ' eventToEdit ');
+	// console.log(eventFromTheList, ' eventToEdit ');
 		// if(tourneyFromTheList.type === "tourney"){
 
 		// } else (... === "event") {
@@ -260,7 +281,7 @@ class TourneyContainer extends Component {
       		});
 
       const editResponseParsed = await editResponse.json();
-      console.log('editResponseParsed: ', editResponseParsed);
+      // console.log('editResponseParsed: ', editResponseParsed);
 
       const newEventArrayWithEdit = this.state.events.map((event)=> {
         if(event.id === editResponseParsed.data.id) {
@@ -271,7 +292,8 @@ class TourneyContainer extends Component {
       
       this.setState({
         events: newEventArrayWithEdit,
-        showEventModal: false
+        showEventModal: false,
+        showOneTourneyModalOpen: false
       })
 
     } catch(err) {
@@ -306,7 +328,7 @@ class TourneyContainer extends Component {
       		});
 
       const editResponseParsed = await editResponse.json();
-      console.log('editResponseParsed: ', editResponseParsed);
+      // console.log('editResponseParsed: ', editResponseParsed);
 
       const newTourneyArrayWithEdit = this.state.tourneys.map((tourney)=> {
         if(tourney.id === editResponseParsed.data.id) {
@@ -329,16 +351,25 @@ class TourneyContainer extends Component {
 
 
   render () {
+  		
   	return(
   	
-  
+  		<Container fluid>
+			<MenuBar/>
 			<Grid divided='vertically' centered stackable>
-			    <Grid.Row columns={3}>
+			    <Grid.Row columns={3}> 
+			    <Grid.Column width={16}>
 			      <Grid.Column width={3}></Grid.Column>
-			      <Grid.Column width={10}>
-					<MenuBar/>
-			        <TourneyList tourneys={this.state.tourneys} deleteTourney={this.deleteTourney} showEditModal={this.showEditModal}/>
-			        <EventList events={this.state.events} deleteEvent={this.deleteEvent} showEventModal={this.showEventModal}/>
+			        <TourneyList tourneys={this.state.tourneys}
+			        			 deleteTourney={this.deleteTourney}
+			        			 deleteEvent={this.deleteEvent}
+			        			 showEditModal={this.showEditModal}
+			        			 showOneTourney={this.showOneTourney}
+			        			 showEventModal={this.showEventModal}
+			        			 tourneyEvents={this.state.showOneTourneyEvents}
+			        			 getTourneyEvents={this.getEvents}/>
+			        <ShowOneTourney tourneyEvents={this.state.showOneTourneyEvents} open={this.state.showOneTourneyModalOpen} tourney={this.state.showOneTourneyObject} addEvent={this.addEvent} deleteEvent={this.deleteEvent} showEventModal={this.showEventModal}/>
+			        {/*<EventList events={this.state.events} deleteEvent={this.deleteEvent} showEventModal={this.showEventModal}/>*/}
 			      </Grid.Column>
 			      <Grid.Column width={3}></Grid.Column>
 			    	<EditTourneyModal handleEditChange={this.handleEditChange} open={this.state.showEditModal} tourneyToEdit={this.state.tourneyToEdit} closeAndEdit={this.closeAndEdit}/>
@@ -346,14 +377,14 @@ class TourneyContainer extends Component {
 			    </Grid.Row>
 
 
-			    <Grid.Row columns={2}>
+			    <Grid.Row columns={1}>
 			      
 			      <Grid.Column width={7}>
 			        <CreateTourney addTourney={this.addTourney} />
 			      </Grid.Column>
-			      <Grid.Column width={7}>
+			      {/*<Grid.Column width={7}>
 			      	<CreateEvent addEvent={this.addEvent} />
-			      </Grid.Column>
+			      </Grid.Column>*/}
 			      {/*<EditTourneyModal handleEditChange={this.handleEditChange} open={this.state.showEditModal} tourneyToEdit={this.state.tourneyToEdit} closeAndEdit={this.closeAndEdit}/>*/}
 			    </Grid.Row>
 
@@ -361,7 +392,9 @@ class TourneyContainer extends Component {
 
 
 			</Grid>
+			</Container>
 			)
+		
 	}
 
 }

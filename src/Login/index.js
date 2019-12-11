@@ -35,9 +35,12 @@ class Login extends Component {
 		});
 
 		const parsedResponse = await loginResponse.json();
-
+		const currentUser = parsedResponse.data
+		console.log(currentUser,'after return from login post')
 		if (parsedResponse.status.code === 200) {
 			console.log('Login successful');
+			this.setState({currentUser: currentUser})
+
 			this.props.history.push('/tourneys');
 		} else {
 			this.setState({

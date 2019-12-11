@@ -4,7 +4,7 @@ import { Card, Button, Grid, Header, Form} from 'semantic-ui-react'
 function EventList(props) {
 
 	const events = props.events.map((event) => {
-
+		// if (event.user.Id == currentUser.Id)
 		return (
 
 			<Card key={event.id}>
