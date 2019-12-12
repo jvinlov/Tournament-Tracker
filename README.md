@@ -1,7 +1,13 @@
 # Tournament-Tracker
-Pickleball
 
-User Story: 
+Link to hosted app: https://react-pb-tournament-tracker.herokuapp.com/tourneys
+
+This project is a tool for competitive pickleball players to keep track of their entered tournaments and results.  It makes it easier for a player to efficiently schedule events and track events entered, level entered, partner, and results in a single location.  After the tournament players can enter results.  This lets players see their progress over time and which partners they perform best with.  This aids in making future choiices for tournaments, events, and partners.  A goal of many players is to compete at the Pickleball Nationals tournament which requires winning USAPA sanctioned tournaments prior to entering.  This app reminds players which tournaments qualify for Nationals participation.
+
+Technologies used in this project were React, Pyton, Peewee, Flask, and Semantic UI React.
+
+
+User Stories: 
 
 https://docs.google.com/document/d/1FkaXoabmYtjEbIKRwsGURrNBxFx1ljiaGQOTKxgpwrg/edit?usp=sharing
 
@@ -9,7 +15,9 @@ https://docs.google.com/document/d/1FkaXoabmYtjEbIKRwsGURrNBxFx1ljiaGQOTKxgpwrg/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+In order to run this app locally the user must npm install react for the front end side.
+
+In order to run this app locally using Flask the user must pip install -r requirements.txt and python app.py
 
 In the project directory, you can run:
 
@@ -18,60 +26,12 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Unsolved problems with the app: users cannot see other users tournaments to view results and choose partners
 
-### `npm test`
+Future features:  scrape https://www.pickleballtournaments.com/pbt_tlisting.pl?when=F to return list of tournaments, then add to user list of tournaments instead of user creating tournament.  Search for other users and see results.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

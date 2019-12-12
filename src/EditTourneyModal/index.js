@@ -9,7 +9,7 @@ const EditTourneyModal = (props) => {
 			<Modal open={props.open}>
 				<Grid centered stackable>
 					<Grid.Row columns={2}>
-						<Grid.Column width={6}>
+						<Grid.Column width={8}>
 							<Header>Edit Tourney</Header>
 							<Modal.Content>
 								<Form onSubmit={props.closeAndEdit}>

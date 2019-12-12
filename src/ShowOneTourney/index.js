@@ -5,12 +5,12 @@ import EventList from '../EventList'
 
 
 const ShowOneTourney = (props) => {
-	console.log(props)
+	// console.log(props)
 	// console.log(props.getTourneyEvents(props.tourneyId))
 
 	const tourneyEvents = props.tourneyEvents.map(event=>{
 		if(event.id===props.tourneyId){
-			// console.log(event)
+			console.log(event)
 			return <h1>event.category</h1>
 		}
 	});
@@ -27,16 +27,16 @@ const ShowOneTourney = (props) => {
 
 								<Card.Content>
 									<Card.Header>Name: {props.tourney.name}</Card.Header>
-									<Card.Meta>
+										<Card.Meta>
 										<span>Location: {props.tourney.location}</span>
-									</Card.Meta>
+										</Card.Meta>
 									<Card.Meta>
 										<span>Date: {props.tourney.date}</span>
 									</Card.Meta>
 							
+								</Card.Content>	
 								<EventList events={props.tourneyEvents} deleteEvent={props.deleteEvent} showEventModal={props.showEventModal}/>	
 								
-								</Card.Content>	
 							</Card>
 							<CreateEvent tourneyId={props.tourneyId} addEvent={props.addEvent}/>
 						</Grid.Column>

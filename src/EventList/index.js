@@ -7,7 +7,7 @@ function EventList(props) {
 		// if (event.user.Id == currentUser.Id)
 		return (
 
-			<Card key={event.id}>
+			<Card key={event.id}>Events Entered
 				<Card.Content>
 					<Card.Header>{event.category}, {event.level}, {event.partner}, {event.results}</Card.Header>
 				</Card.Content>
